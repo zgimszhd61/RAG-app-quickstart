@@ -90,16 +90,32 @@ def generate_response(retrieved_items):
         max_tokens=50
     )
     return response["choices"][0]["text"]
+
+def main(query, data_items):
+    # Vectorize and store each data item
+    for item in data_items:
+        vectorize_and_store(item)
+
+    # Retrieve relevant data items based on the query
+    retrieved_items = retrieve(query)
+
+    # Generate a response based on the retrieved data
+    response = generate_response(retrieved_items["data"]["TextItem"])
+
+    print("Generated Response:", response)
+
+# Example usage
+data_items = [
+    {"text": "The quick brown fox jumps over the lazy dog."},
+    {"text": "Artificial intelligence will revolutionize many industries."},
+    {"text": "Sustainability practices are crucial for future development."}
+]
+
+query = "What are the impacts of artificial intelligence on industries?"
+
+if __name__ == "__main__":
+    main(query, data_items)
+
 ```
 
 请注意，这个示例是高度简化的，实际应用中可能需要更复杂的逻辑来处理数据的向量化、存储和检索过程。此外，你可能需要根据具体的应用场景调整模型的选择和参数设置。
-
-Citations:
-[1] https://juejin.cn/post/7326864191918686208
-[2] https://www.github-zh.com/projects/742015163-ragxplorer
-[3] https://towardsdatascience.com/retrieval-augmented-generation-rag-from-theory-to-langchain-implementation-4e9bd5f6a4f2
-[4] https://github.com/Wang-Shuo/A-Guide-to-Retrieval-Augmented-LLM
-[5] https://developer.aliyun.com/article/1231710
-[6] https://developer.aliyun.com/article/1231703
-[7] https://blog.csdn.net/yunqiinsight/article/details/136802976
-[8] https://blog.csdn.net/yunqiinsight/article/details/81115458
